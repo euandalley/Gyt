@@ -19,10 +19,18 @@ def hash_object(data:bytes) -> str:
     return oid
 
 
-def get_object(oid:str) -> bytes:
+def get_object(oid:str, expected:str='blob') -> bytes:
     """
     Get the contents of a file from hash
     """
     with open(f'{GIT_DIR}/objects/{oid}', 'rb') as f:
-        contents: bytes = f.read()
-        return contents
+        obj: bytes = f.read()
+
+    objType,_,content = obj.partition(b'\x00')
+    objType = objType.decode()
+
+    if expected is not None:
+        if objType != expected:
+            raise Exception(f'Expected {expected}, got {objType}')
+
+    return content

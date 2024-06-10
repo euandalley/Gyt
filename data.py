@@ -9,9 +9,9 @@ def init() -> None:
 
 def hash_object(data:bytes) -> str:
     """
-    Hash contents of file, store file contents under the hash
+    Hash contents of file, store file contents under the hash, return the hash
     """
-    oid = hashlib.sha1(data).hexdigest()
+    oid: str = hashlib.sha1(data).hexdigest()
 
     with open(f'{GIT_DIR}/objects/{oid}', 'wb') as f:
         f.write(data)
@@ -19,10 +19,10 @@ def hash_object(data:bytes) -> str:
     return oid
 
 
-def get_object(oid:str):
+def get_object(oid:str) -> bytes:
     """
     Get the contents of a file from hash
     """
     with open(f'{GIT_DIR}/objects/{oid}', 'rb') as f:
-        contents = f.read()
+        contents: bytes = f.read()
         return contents

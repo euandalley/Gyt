@@ -1,5 +1,5 @@
 
-import argparse
+from argparse import Namespace, ArgumentParser
 import os
 import sys
 
@@ -11,37 +11,37 @@ def main() -> None:
     args.func(args)
 
 
-def parse_args() -> argparse.Namespace:
+def parse_args() -> Namespace:
     """
     Parser for commands
     """
-    parser = argparse.ArgumentParser()
+    parser: ArgumentParser = ArgumentParser()
 
     commands = parser.add_subparsers(dest='command')
     commands.required = True
 
-    initParser = commands.add_parser('init')
+    initParser: ArgumentParser = commands.add_parser('init')
     initParser.set_defaults(func=cmd_init)
 
-    hashObjParser = commands.add_parser('hash-object')
+    hashObjParser: ArgumentParser = commands.add_parser('hash-object')
     hashObjParser.set_defaults(func=cmd_hash_object)
     hashObjParser.add_argument('file')
 
-    catFileParser = commands.add_parser('cat-file')
+    catFileParser: ArgumentParser = commands.add_parser('cat-file')
     catFileParser.set_defaults(func=cmd_cat_file)
     catFileParser.add_argument('object')
 
     return parser.parse_args()
 
 
-def cmd_init(args):
+def cmd_init(args) -> None:
     """
     Creates a new empty repository with init command
     """
     data.init()
 
 
-def cmd_hash_object(args):
+def cmd_hash_object(args) -> None:
     """
     Implement the hash-object command to hash file data
     """
@@ -49,7 +49,7 @@ def cmd_hash_object(args):
         print(data.hash_object(f.read()))
 
 
-def cmd_cat_file(args):
+def cmd_cat_file(args) -> None:
     """
     Implement the cat-file command to read file data from hash. Opposite of 
     hash-object

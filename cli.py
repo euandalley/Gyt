@@ -55,4 +55,4 @@ def cmd_cat_file(args) -> None:
     hash-object
     """
     sys.stdout.flush()
-    sys.stdout.buffer.write(data.get_object(args.object))
+    sys.stdout.buffer.write(data.get_object(args.object, expected=None)) # type: ignore

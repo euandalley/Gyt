@@ -1,6 +1,7 @@
 
 import argparse
 import os
+import sys
 
 from . import data
 
@@ -26,6 +27,10 @@ def parse_args() -> argparse.Namespace:
     hashObjParser.set_defaults(func=cmd_hash_object)
     hashObjParser.add_argument('file')
 
+    catFileParser = commands.add_parser('cat-file')
+    catFileParser.set_defaults(func=cmd_cat_file)
+    catFileParser.add_argument('object')
+
     return parser.parse_args()
 
 
@@ -38,7 +43,16 @@ def cmd_init(args):
 
 def cmd_hash_object(args):
     """
-    Implement the hash-object command
+    Implement the hash-object command to hash file data
     """
     with open(args.file, 'rb') as f:
         print(data.hash_object(f.read()))
+
+
+def cmd_cat_file(args):
+    """
+    Implement the cat-file command to read file data from hash. Opposite of 
+    hash-object
+    """
+    sys.stdout.flush()
+    sys.stdout.buffer.write(data.get_object(args.object))

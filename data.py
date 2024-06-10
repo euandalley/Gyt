@@ -17,3 +17,12 @@ def hash_object(data:bytes) -> str:
         f.write(data)
 
     return oid
+
+
+def get_object(oid:str):
+    """
+    Get the contents of a file from hash
+    """
+    with open(f'{GIT_DIR}/objects/{oid}', 'rb') as f:
+        contents = f.read()
+        return contents

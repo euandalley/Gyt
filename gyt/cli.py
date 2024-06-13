@@ -31,7 +31,7 @@ def parse_args() -> Namespace:
     catFileParser.set_defaults(func=cmd_cat_file)
     catFileParser.add_argument('object')
 
-    writeTreeParser: ArgumentParser = commands.add_parser('write_tree')
+    writeTreeParser: ArgumentParser = commands.add_parser('write-tree')
     writeTreeParser.set_defaults(func=write_tree)
 
     return parser.parse_args()

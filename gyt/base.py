@@ -11,6 +11,11 @@ def commit(message:str):
     information
     """
     commit = f'tree {write_tree()}\n'
+
+    head = data.get_HEAD()
+    if head:
+        commit += f'parent {head}\n'
+
     commit += '\n'
     commit += f'{message}'
 

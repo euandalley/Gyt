@@ -50,3 +50,15 @@ def set_HEAD(oid:str) -> None:
     """
     with open(f'{GIT_DIR}/HEAD', 'w') as f:
         f.write(oid)
+
+
+def get_HEAD() -> str | None:
+    """
+    Get the id of the most recent commit
+    """
+    headDir = f'{GIT_DIR}/HEAD'
+    if os.path.isfile(headDir):
+        with open(headDir) as f:
+            return f.read().strip()
+    else:
+        return None

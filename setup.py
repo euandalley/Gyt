@@ -1,6 +1,6 @@
+#!/usr/bin/env python3
 
-from importlib.metadata import entry_points
-from setuptools import setup
+from setuptools import find_packages, setup
 
 setup(
     name='gyt',
@@ -8,7 +8,7 @@ setup(
     packages=['gyt'],
     entry_points={
         'console_scripts': [
-            'gyt = gyt.cli.main'
+            'gyt = gyt.cli:main'
         ]
     }
 )

@@ -32,7 +32,11 @@ def parse_args() -> Namespace:
     catFileParser.add_argument('object')
 
     writeTreeParser: ArgumentParser = commands.add_parser('write-tree')
-    writeTreeParser.set_defaults(func=write_tree)
+    writeTreeParser.set_defaults(func=cmd_write_tree)
+
+    readTreeParser: ArgumentParser = commands.add_parser('read-tree')
+    readTreeParser.set_defaults(func=cmd_read_tree)
+    readTreeParser.add_argument('tree')
 
     return parser.parse_args()
 
@@ -61,5 +65,11 @@ def cmd_cat_file(args) -> None:
     sys.stdout.buffer.write(data.get_object(args.object, expected=None)) # type: ignore
 
 
-def write_tree(args) -> None:
+def cmd_write_tree(args) -> None:
+    """Encode state of current directory"""
     print(base.write_tree())
+
+
+def cmd_read_tree(args) -> None:
+    """Restore a tree from it's id"""
+    base.read_tree(args.tree)

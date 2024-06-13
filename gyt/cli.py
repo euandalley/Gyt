@@ -3,7 +3,7 @@ from argparse import Namespace, ArgumentParser
 import os
 import sys
 
-from . import data
+from gyt import data, base
 
 
 def main() -> None:
@@ -31,6 +31,9 @@ def parse_args() -> Namespace:
     catFileParser.set_defaults(func=cmd_cat_file)
     catFileParser.add_argument('object')
 
+    writeTreeParser: ArgumentParser = commands.add_parser('write_tree')
+    writeTreeParser.set_defaults(func=write_tree)
+
     return parser.parse_args()
 
 
@@ -56,3 +59,7 @@ def cmd_cat_file(args) -> None:
     """
     sys.stdout.flush()
     sys.stdout.buffer.write(data.get_object(args.object, expected=None)) # type: ignore
+
+
+def write_tree(args) -> None:
+    base.write_tree()

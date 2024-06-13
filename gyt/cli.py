@@ -62,4 +62,4 @@ def cmd_cat_file(args) -> None:
 
 
 def write_tree(args) -> None:
-    base.write_tree()
+    print(base.write_tree())

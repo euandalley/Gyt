@@ -15,7 +15,12 @@ def hash_object(data:bytes, objType='blob') -> str:
     obj = objType.encode() + NULL + data
     oid: str = hashlib.sha1(obj).hexdigest()
 
-    with open(f'{GIT_DIR}/objects/{oid}', 'wb') as f:
+    objectsPath = os.path.dirname(f'{GIT_DIR}/objects/')
+
+    if not os.path.isdir(objectsPath):
+        os.makedirs(objectsPath)
+
+    with open(os.path.join(objectsPath, oid), 'wb') as f:
         f.write(data)
         f.write(obj)
 
@@ -29,7 +34,7 @@ def get_object(oid:str, expected='blob') -> bytes:
     with open(f'{GIT_DIR}/objects/{oid}', 'rb') as f:
         obj: bytes = f.read()
 
-    objType,_,content = obj.partition(NULL)
+    objType, _, content = obj.partition(NULL)
     objType = objType.decode()
 
     if expected is not None:

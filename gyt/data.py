@@ -42,3 +42,11 @@ def get_object(oid:str, expected='blob') -> bytes:
             raise Exception(f'Expected {expected}, got {objType}')
 
     return content
+
+
+def set_HEAD(oid:str) -> None:
+    """
+    Head is the id of the most recent commit
+    """
+    with open(f'{GIT_DIR}/HEAD', 'w') as f:
+        f.write(oid)

@@ -38,6 +38,10 @@ def parse_args() -> Namespace:
     readTreeParser.set_defaults(func=cmd_read_tree)
     readTreeParser.add_argument('tree')
 
+    commitParser: ArgumentParser = commands.add_parser('commit')
+    commitParser.set_defaults(func=cmd_commit)
+    commitParser.add_argument('-m', '--message', required=True)
+
     return parser.parse_args()
 
 
@@ -46,6 +50,13 @@ def cmd_init(args) -> None:
     Creates a new empty repository with init command
     """
     data.init()
+
+
+def cmd_commit(args):
+    """
+    Implements the commit command
+    """
+    print(base.commit(args.message))
 
 
 def cmd_hash_object(args) -> None:

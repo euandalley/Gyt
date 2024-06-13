@@ -5,6 +5,21 @@ from typing import Any, Generator
 from gyt import data
 
 
+def commit(message:str):
+    """
+    Create a commit object with files at the top, then new line, then commit
+    information
+    """
+    commit = f'tree {write_tree()}\n'
+    commit += '\n'
+    commit += f'{message}'
+
+    oid = data.hash_object(commit.encode(), 'commit')
+    data.set_HEAD(oid)
+
+    return oid
+
+
 def write_tree(directory:str='.'):
     """
     Store the current working directory in the object database by scanning the directory recursively
@@ -89,7 +104,7 @@ def read_tree(oid:str) -> None:
 
 
 def _empty_current_dir_() -> None:
-
+    """Clear directory before reconstructing"""
     for root, dirNames, fileNames in os.walk('.', topdown=False):
         for fileName in fileNames:
             path = os.path.relpath(f'{root}/{fileName}')
